@@ -1,0 +1,261 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj",
+        "projectName": "UJP6TH_HSZF_2024251.Application",
+        "projectPath": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj",
+        "packagesPath": "C:\\Users\\peterke\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\peterke\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Model\\UJP6TH_HSZF_2024251.Model.csproj": {
+                "projectPath": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Model\\UJP6TH_HSZF_2024251.Model.csproj"
+              },
+              "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Persistence.MsSql\\UJP6TH_HSZF_2024251.Persistence.MsSql.csproj": {
+                "projectPath": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Persistence.MsSql\\UJP6TH_HSZF_2024251.Persistence.MsSql.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "Spectre.Console": {
+              "target": "Package",
+              "version": "[0.49.1, )"
+            },
+            "Spectre.Console.ImageSharp": {
+              "target": "Package",
+              "version": "[0.49.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Model\\UJP6TH_HSZF_2024251.Model.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Model\\UJP6TH_HSZF_2024251.Model.csproj",
+        "projectName": "UJP6TH_HSZF_2024251.Model",
+        "projectPath": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Model\\UJP6TH_HSZF_2024251.Model.csproj",
+        "packagesPath": "C:\\Users\\peterke\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Model\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\peterke\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Persistence.MsSql\\UJP6TH_HSZF_2024251.Persistence.MsSql.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Persistence.MsSql\\UJP6TH_HSZF_2024251.Persistence.MsSql.csproj",
+        "projectName": "UJP6TH_HSZF_2024251.Persistence.MsSql",
+        "projectPath": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Persistence.MsSql\\UJP6TH_HSZF_2024251.Persistence.MsSql.csproj",
+        "packagesPath": "C:\\Users\\peterke\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Persistence.MsSql\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\peterke\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Model\\UJP6TH_HSZF_2024251.Model.csproj": {
+                "projectPath": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Model\\UJP6TH_HSZF_2024251.Model.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
