@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,21 +9,20 @@ using UJP6TH_HSZF_2024251.Persistence.MsSql;
 
 namespace UJP6TH_HSZF_2024251.Application.Repository
 {
-    interface IFareRepository
+    public interface IFareRepository
     {
-        Task Add(Fare fare, TaxiCar car);
+        Task<List<Fare>> GetAllFares();
     }
     public class FareRepository : IFareRepository
     {
-        private readonly TaxiDbContext _dbContext;
+        private readonly TaxiDbContext context;
         public FareRepository(TaxiDbContext context)
         {
-            _dbContext = context;
+            this.context = context;
         }
-        public async Task Add(Fare fare, TaxiCar car)
+        public async Task<List<Fare>> GetAllFares()
         {
-            car.Fares.Add(fare);
-            await _dbContext.SaveChangesAsync();
+            return await context.Fares.ToListAsync();
         }
     }
 }

@@ -22,18 +22,15 @@ namespace UJP6TH_HSZF_2024251.Console
 {
     public class Program
     {
-        private static ITaxiService taxiService;
-        private static ITaxiRepository taxiRepository;
+        private static ServiceProvider serviceProvider;
 
-        private static void HandleFareWarning(object sender)
-        {
-            AnsiConsole.MarkupLine("[red]Ennek az útnak az ára legalább kétszer több mint az eddigiek közül bármelyik![/]");
-        }
-
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Init();
-            Menu();
+
+            // Resolve the TaxiController and run the main async loop
+            var taxiController = serviceProvider.GetRequiredService<TaxiController>();
+            await taxiController.RunAsync();
         }
 
         private static void Init()
@@ -43,44 +40,21 @@ namespace UJP6TH_HSZF_2024251.Console
             var services = new ServiceCollection();
 
             services.AddDbContext<TaxiDbContext>(options =>
-                options.UseInMemoryDatabase("TaxiDb"));
+                options
+                    .UseInMemoryDatabase("TaxiDb")
+                    .UseLazyLoadingProxies());
 
+            // Register services and repositories
             services.AddScoped<ITaxiService, TaxiService>();
+            services.AddScoped<IFareService, FareService>(); // Add IFareService and its implementation
+            services.AddScoped<ITaxiRepository, TaxiRepository>();
+            services.AddScoped<IFareRepository, FareRepository>();
 
-            IServiceCollection serviceCollection = services.AddScoped<ITaxiRepository, TaxiRepository>();
+            // Register the controller
+            services.AddScoped<TaxiController>();
 
-            var serviceProvider = services.BuildServiceProvider();
-
-            taxiService = serviceProvider.GetRequiredService<ITaxiService>();
-            taxiRepository = serviceProvider.GetRequiredService<ITaxiRepository>();
-        }
-
-        private static void Menu()
-        {
-            AnsiConsole.Clear();
-            Rule rule = new Rule("[yellow]THBt adminisztráció[/]");
-            rule.Justification = Justify.Left;
-            AnsiConsole.Write(rule);
-
-            List<Option> MenuOptions = new List<Option>()
-        {
-            new("Autók beolvasása JSON-ból", taxiService.AddData),
-            new("Összes autó kiírása", taxiService.ListAllCars),
-            new("Autó felvétele", taxiService.AddCar),
-            new("Autó törlése", taxiService.DeleteCar),
-            new("Autó módosítása", taxiService.ModifyCar),
-            new("Út hozzáadása autóhóz", taxiService.AddFareToCar),
-            new("Keresés", taxiService.Filter),
-            new("Statisztika generálása", taxiService.GenerateStatistics)
-        };
-
-            var menuValue = AnsiConsole.Prompt(
-                new SelectionPrompt<Option>()
-                    .AddChoices(MenuOptions));
-
-            menuValue.action.Invoke();
-
-            Menu();
+            // Build the service provider
+            serviceProvider = services.BuildServiceProvider();
         }
     }
 }

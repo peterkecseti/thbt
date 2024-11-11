@@ -3,16 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.application\\repository\\farerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|solutionrelative:ujp6th_hszf_2024251.application\\repository\\farerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.application\\taxicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|solutionrelative:ujp6th_hszf_2024251.application\\taxicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.application\\option.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|solutionrelative:ujp6th_hszf_2024251.application\\option.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.application\\searchoption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|solutionrelative:ujp6th_hszf_2024251.application\\searchoption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.application\\taxiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|solutionrelative:ujp6th_hszf_2024251.application\\taxiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.application\\repository\\farerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|solutionrelative:ujp6th_hszf_2024251.application\\repository\\farerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.application\\fareservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|solutionrelative:ujp6th_hszf_2024251.application\\fareservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.application\\repository\\taxirepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|solutionrelative:ujp6th_hszf_2024251.application\\repository\\taxirepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2BC493A-431B-4CB4-BE04-45E97BC091DD}|UJP6TH_HSZF_2024251.Console\\UJP6TH_HSZF_2024251.Console.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2BC493A-431B-4CB4-BE04-45E97BC091DD}|UJP6TH_HSZF_2024251.Console\\UJP6TH_HSZF_2024251.Console.csproj|solutionrelative:ujp6th_hszf_2024251.console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,48 +42,109 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Console\\Program.cs",
+              "RelativeDocumentMoniker": "UJP6TH_HSZF_2024251.Console\\Program.cs",
+              "ToolTip": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Console\\Program.cs",
+              "RelativeToolTip": "UJP6TH_HSZF_2024251.Console\\Program.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAwwDMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T09:17:18.324Z",
+              "IsPinned": true
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "FareRepository.cs",
               "DocumentMoniker": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\Repository\\FareRepository.cs",
               "RelativeDocumentMoniker": "UJP6TH_HSZF_2024251.Application\\Repository\\FareRepository.cs",
               "ToolTip": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\Repository\\FareRepository.cs",
               "RelativeToolTip": "UJP6TH_HSZF_2024251.Application\\Repository\\FareRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAANAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T18:15:19.225Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-11T21:11:30.547Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
+              "Title": "FareService.cs",
+              "DocumentMoniker": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\FareService.cs",
+              "RelativeDocumentMoniker": "UJP6TH_HSZF_2024251.Application\\FareService.cs",
+              "ToolTip": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\FareService.cs",
+              "RelativeToolTip": "UJP6TH_HSZF_2024251.Application\\FareService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-11T21:11:07.748Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "TaxiRepository.cs",
               "DocumentMoniker": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\Repository\\TaxiRepository.cs",
               "RelativeDocumentMoniker": "UJP6TH_HSZF_2024251.Application\\Repository\\TaxiRepository.cs",
               "ToolTip": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\Repository\\TaxiRepository.cs",
               "RelativeToolTip": "UJP6TH_HSZF_2024251.Application\\Repository\\TaxiRepository.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAAAQwCQAAAAAAAAA",
+              "ViewState": "AQIAACcAAAAAAAAAAAAywDIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-07T18:09:26.01Z"
+              "WhenOpened": "2024-11-11T12:29:06.996Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "TaxiController.cs",
+              "DocumentMoniker": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\TaxiController.cs",
+              "RelativeDocumentMoniker": "UJP6TH_HSZF_2024251.Application\\TaxiController.cs",
+              "ToolTip": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\TaxiController.cs",
+              "RelativeToolTip": "UJP6TH_HSZF_2024251.Application\\TaxiController.cs",
+              "ViewState": "AQIAAOkAAAAAAAAAAAAmwO8AAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-11T12:15:37.318Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "TaxiService.cs",
               "DocumentMoniker": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\TaxiService.cs",
               "RelativeDocumentMoniker": "UJP6TH_HSZF_2024251.Application\\TaxiService.cs",
               "ToolTip": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\TaxiService.cs",
               "RelativeToolTip": "UJP6TH_HSZF_2024251.Application\\TaxiService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADoAAAA1AAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-02T14:33:40.745Z"
+              "WhenOpened": "2024-11-11T12:15:01.348Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SearchOption.cs",
+              "DocumentMoniker": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\SearchOption.cs",
+              "RelativeDocumentMoniker": "UJP6TH_HSZF_2024251.Application\\SearchOption.cs",
+              "ToolTip": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\SearchOption.cs",
+              "RelativeToolTip": "UJP6TH_HSZF_2024251.Application\\SearchOption.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-11T12:14:18.615Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Option.cs",
+              "DocumentMoniker": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\Option.cs",
+              "RelativeDocumentMoniker": "UJP6TH_HSZF_2024251.Application\\Option.cs",
+              "ToolTip": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\Option.cs",
+              "RelativeToolTip": "UJP6TH_HSZF_2024251.Application\\Option.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T18:57:42.185Z"
             }
           ]
         }

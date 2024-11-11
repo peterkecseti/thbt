@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-
-namespace UJP6TH_HSZF_2024251.Application
+﻿namespace UJP6TH_HSZF_2024251.Application
 {
     public class Option
     {
-        public string OptionName;
-        public Action action;
-        public Func<string, int> func;
+        public string OptionName { get; }
+        public Func<Task> ActionAsync { get; }
 
-        public Option(string optionName, Action selected)
+        public Option(string optionName, Func<Task> action)
         {
-            this.OptionName = optionName;
-            this.action = selected;
+            OptionName = optionName ?? throw new ArgumentNullException(nameof(optionName));
+            ActionAsync = action ?? throw new ArgumentNullException(nameof(action));
         }
-
         public override string ToString() => OptionName;
     }
 }

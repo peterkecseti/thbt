@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Spectre.Console;
 using UJP6TH_HSZF_2024251.Application.Dto;
 using UJP6TH_HSZF_2024251.Application.Repository;
@@ -11,429 +10,206 @@ namespace UJP6TH_HSZF_2024251.Application
 {
     public interface ITaxiService
     {
-        void AddData();
-        void ListAllCars();
-        void PrintCarsTree(List<TaxiCar> cars);
-        void AddCar();
-        bool LicensePlateExists(string licensePlate);
-        void DeleteCar();
-        void ModifyCar();
-        void AddFareToCar();
-        void Filter();
-        string ReadPrompt(string prompt);
+        Task AddData(string path);
+        Task<List<TaxiCar>> GetAllCars();
+        //Task<List<TaxiCar>> PrintCarsTree(List<TaxiCar> cars);
+        Task AddCar(string licensePlate, string driver);
+        Task<bool> LicensePlateExists(string licensePlate);
+        Task DeleteCar(TaxiCar toDelete);
+        Task UpdateCar(TaxiCar toUpdate, string? newLicensePlate = null);
+        Task AddFareToCar(string from, string to, int distance, int paidAmount, TaxiCar selectedCar);
+        List<TaxiCar> FilterByLicensePlate(List<TaxiCar> cars, string filterValue);
+        List<TaxiCar> FilterByDriver(List<TaxiCar> cars, string filterValue);
+        List<TaxiCar> FilterByFromLocation(List<TaxiCar> cars, string filterValue);
+        List<TaxiCar> FilterByToLocation(List<TaxiCar> cars, string filterValue);
+        List<TaxiCar> FilterByDistance(List<TaxiCar> cars, int filterValue, Func<int, int, bool> comparisonFunc);
+        List<TaxiCar> FilterByPaidAmount(List<TaxiCar> cars, int filterValue, Func<int, int, bool> comparisonFunc);
+        Task<List<TaxiCar>> Filter(List<Func<List<TaxiCar>, List<TaxiCar>>> filterActions);
         void GenerateStatistics();
     }
     public class TaxiService : ITaxiService
     {
-        public ITaxiRepository context;
-        public TaxiService(ITaxiRepository context) {
-            this.context = context;
+        public ITaxiRepository taxiContext;
+        public IFareRepository fareContext;
+        public TaxiService(ITaxiRepository taxiContext, IFareRepository fareContext) {
+            this.taxiContext = taxiContext;
+            this.fareContext = fareContext;
+            Fare.HighPaidAmountDetected += OnHighPaidAmountDetected;
         }
 
         // event
         public delegate void FareWarningEventHandler(object sender);
         public event FareWarningEventHandler FareWarning;
-        public void AddData()
-        {
-            string path = ReadPrompt("Fájl elérési útvonala: ");
-            AnsiConsole.Clear();
-            try
-            {
-                var json = File.ReadAllText("A:\\progi\\szfa\\taxi.json");
-                //var json = File.ReadAllText(path);
-                var taxiData = JsonConvert.DeserializeObject<RootTaxiDto>(json);
-
-                foreach (var taxiCarData in taxiData.TaxiCars)
-                {
-                    var existingTaxiCar = context.GetAllCars()
-                        .Where(tc => tc.LicensePlate == taxiCarData.LicensePlate).FirstOrDefault();
-
-                    TaxiCar taxiCar;
-                    if (existingTaxiCar != null)
-                    {
-                        taxiCar = existingTaxiCar;
-                    }
-                    else
-                    {
-                        taxiCar = new TaxiCar(
-                            taxiCarData.LicensePlate,
-                            taxiCarData.Driver);
-                        context.Add(taxiCar);
-                    }
-
-                    foreach (var fareData in taxiCarData.Fares)
-                    {
-                        var fare = new Fare(
-                            fareData.From,
-                            fareData.To,
-                            fareData.Distance,
-                            fareData.PaidAmount,
-                            fareData.FareStartDate,
-                            taxiCar);
-
-                        taxiCar.Fares.Add(fare);
-                    }
-                }
-
-                AnsiConsole.MarkupLine("[green]Beolvasás sikeres![/]");
-                Console.ReadKey();
-                AnsiConsole.Clear();
-
-            }
-            catch (Exception ex)
-            {
-                AnsiConsole.MarkupLine($"[red]Hiba történt:[/]\n[grey]{ex.Message}[/]");
-                Console.ReadKey();
-                AnsiConsole.Clear();
-            }
-        }
-
-        public void ListAllCars()
-        {
-            var cars = context.GetAllCars();
-
-            PrintCarsTree(cars);
-        }
-
-        public void PrintCarsTree(List<TaxiCar> cars)
-        {
-            if (cars.Count == 0)
-            {
-                AnsiConsole.WriteLine("A keresésnek nem volt eredménye.");
-                Console.ReadKey();
-                AnsiConsole.Clear();
-                return;
-            }
-
-            var root = new Tree("[bold yellow]Autók:[/]");
-
-            foreach (var car in cars)
-            {
-                var carNode = root.AddNode($"[bold green]Rendszám:[/] {car.LicensePlate}")
-                    .AddNode($"[bold green]Sofőr:[/] {car.Driver}")
-                    .AddNode("[bold green]Utak:[/]");
-
-                int index = 1;
-                foreach (var fare in car.Fares)
-                {
-                    var fareNode = carNode.AddNode($"[bold]Út {index++}:[/]");
-
-                    fareNode.AddNode($"[blue]Indulás helye:[/] {fare.From}");
-                    fareNode.AddNode($"[blue]Érkezés helye:[/] {fare.To}");
-                    fareNode.AddNode($"[blue]Megtett táv:[/] {fare.Distance} km");
-                    fareNode.AddNode($"[blue]Fizetett:[/] {fare.PaidAmount} Ft");
-                    fareNode.AddNode($"[blue]Indulás ideje:[/] {fare.FareStartDate}");
-                }
-            }
-            AnsiConsole.Write(root);
-            Console.ReadKey();
-            AnsiConsole.Clear();
-        }
-
-        public void AddCar()
-        {
-            // License plate input
-            string licensePlate = AnsiConsole.Prompt(
-                new TextPrompt<string>("Autó rendszáma: ")
-                    .Validate((lp) =>
-                    {
-                        return !LicensePlateExists(lp)
-                            ? ValidationResult.Success()
-                            : ValidationResult.Error("[red]Már létezik ilyen rendszámú autó![/]");
-                    }
-                 ));
-
-            // Driver input
-            string driver = AnsiConsole.Prompt(
-                new TextPrompt<string>("Autó sofőrje: "));
-
-            // Display the king if demanded
-            if(driver == "gaspar laci")
-            {
-                var image = new CanvasImage("UJP6TH_HSZF_2024251.MostImportantAsset.png");
-                image.MaxWidth = 64;
-                AnsiConsole.Write(image);
-            }
-
-            // Save to database
-            TaxiCar newCar = new TaxiCar(licensePlate, driver);
-            context.Add(newCar);
-
-            AnsiConsole.MarkupLine("[green]Autó sikeresen hozzáadva![/]");
-            Console.ReadKey();
-        }
 
         
-        public bool LicensePlateExists(string licensePlate)
+        private void OnHighPaidAmountDetected(Fare fare)
         {
-            var taxiCar = context.GetAllCars()
-                .FirstOrDefault(tc => tc.LicensePlate == licensePlate);
+            AnsiConsole.MarkupLine($"[Red]Az új út fizetett összege [/][grey]({fare.PaidAmount})[/][red] több mint kétszerese a korábbi maximum összegnek![/]");
+        }
+        public async Task AddData(string path)
+        {
+            // Read JSON content from the provided path
+            var json = File.ReadAllText(path); // Use the path parameter
+            var taxiData = JsonConvert.DeserializeObject<RootTaxiDto>(json);
+
+            // Iterate through the deserialized data and add it to the context
+            foreach (var taxiCarData in taxiData.TaxiCars)
+            {
+                string licensePlate = taxiCarData.LicensePlate;
+                var existingTaxiCar = await taxiContext.GetExistingCar(licensePlate);
+
+                TaxiCar taxiCar;
+                if (existingTaxiCar != null)
+                {
+                    taxiCar = existingTaxiCar;
+                }
+                else
+                {
+                    taxiCar = new TaxiCar(
+                        taxiCarData.LicensePlate,
+                        taxiCarData.Driver);
+                    await taxiContext.Add(taxiCar);
+                }
+
+                foreach (var fareData in taxiCarData.Fares)
+                {
+                    var fare = new Fare(
+                        fareData.From,
+                        fareData.To,
+                        fareData.Distance,
+                        fareData.PaidAmount,
+                        fareData.FareStartDate,
+                        taxiCar);
+
+                    await taxiContext.Add(fare);
+                }
+            }
+        }
+
+        public async Task<List<TaxiCar>> GetAllCars()
+        {
+            return await taxiContext.GetAllCars();
+        }
+        public async Task AddCar(string licensePlate, string driver)
+        {
+            // Save to database
+            if (!LicensePlateExists(licensePlate).Result)
+            {
+                TaxiCar newCar = new TaxiCar(licensePlate, driver);
+                await taxiContext.Add(newCar);
+            }
+            else
+            {
+                throw new LicensePlateException();
+            }
+        }
+        public async Task<bool> LicensePlateExists(string licensePlate)
+        {
+            var taxiCar = await taxiContext.GetExistingCar(licensePlate);
 
             if (taxiCar == null) return false;
             else return taxiCar.LicensePlate == licensePlate;
         }
-
-        public void DeleteCar()
+        public async Task DeleteCar(TaxiCar toDelete) => await taxiContext.Remove(toDelete);
+        public async Task UpdateCar(TaxiCar toUpdate, string newLicensePlate = null)
         {
-            AnsiConsole.Clear();
-            var cars = context.GetAllCars();
-
-            AnsiConsole.WriteLine("Melyik autót szeretné törölni?");
-            var carSelect = AnsiConsole.Prompt(
-                new SelectionPrompt<TaxiCar>()
-                    .AddChoices(cars));
-
-            context.Remove(carSelect);
-        }
-        public void ModifyCar()
-        {
-            var cars = context.GetAllCars();
-            var selectCar = AnsiConsole.Prompt(
-                new SelectionPrompt<TaxiCar>()
-                    .Title("Melyik autó adatait szeretné változtatni?")
-                    .AddChoices(cars));
-
-            List<Option> modifyOptions = new List<Option>
+            if (!string.IsNullOrEmpty(newLicensePlate))
             {
-                new("Rendszám", () =>
+                bool licenseExists = await LicensePlateExists(newLicensePlate);
+                if (licenseExists)
                 {
-                    string licensePlate = AnsiConsole.Prompt(
-                        new TextPrompt<string>("Autó rendszáma: ")
-                            .Validate((lp) =>
-                            {
-                                return !LicensePlateExists(lp)
-                                ? ValidationResult.Success()
-                                : ValidationResult.Error("[red]Már létezik ilyen rendszámú autó![/]");
-                            }
-                    ));
-                    selectCar.LicensePlate = licensePlate;
-                    context.UpdateCar(selectCar);
-                }),
-                new("Sofőr", () =>
-                {
-                    string newDriver = ReadPrompt("Új sofőr neve: ");
-                    selectCar.Driver = newDriver;
-                    context.UpdateCar(selectCar);
-                })
-            };
+                    throw new LicensePlateException();
+                }
 
-            var changeOptions = AnsiConsole.Prompt(
-                new MultiSelectionPrompt<Option>()
-                    .Title($"Mely adatokat szeretné változtatni? ({selectCar})")
-                    .AddChoices(modifyOptions));
-
-            foreach(var option in changeOptions)
-            {
-                option.action();
+                toUpdate.LicensePlate = newLicensePlate;
             }
 
-            AnsiConsole.MarkupLine("[green]Adat(ok) sikeresen megváltoztatva! Autó új adatai:[/]");
-            PrintCarsTree(new List<TaxiCar> { selectCar });
+            await taxiContext.UpdateCar(toUpdate);
         }
-
-        public void AddFareToCar()
+        public async Task AddFareToCar(string from, string to, int distance, int paidAmount, TaxiCar selectedCar)
         {
-            AnsiConsole.Clear();
-            var cars = context.GetAllCars();
-
-            if(cars.Count == 0)
-            {
-                AnsiConsole.MarkupLine("[red]Nincsenek felvett autók![/]");
-                Console.ReadLine();
-                return;
-            }
-
-            var carSelect = AnsiConsole.Prompt(
-                new SelectionPrompt<TaxiCar>()
-                    .AddChoices(cars));
-
-            string from = AnsiConsole.Prompt(
-                new TextPrompt<string>("Indulás helye: "));
-
-            string to = AnsiConsole.Prompt(
-                new TextPrompt<string>("Érkezés helye: "));
-
-            int distance = AnsiConsole.Prompt(
-                new TextPrompt<int>("Megtett távolság: "));
-
-            int paidAmount = AnsiConsole.Prompt(
-                new TextPrompt<int>("Fizetett összeg: "));
-
             DateTime now = DateTime.Now;
-            Fare fare = new Fare(from, to, distance, paidAmount, now, carSelect);
+            Fare fare = new Fare(from, to, distance, paidAmount, now, selectedCar);
 
-            AddFare(fare, carSelect);
-            context.Add(fare);
-
-            AnsiConsole.MarkupLine("[green]Út felvétele sikeres![/]");
-            Console.ReadKey();
+            var allFares = fareContext.GetAllFares().Result;
+            Fare.CheckForHighPaidAmount(fare, allFares);
+            
+            await taxiContext.Add(fare);
         }
 
-        public void AddFare(Fare newFare, TaxiCar car)
+        public List<TaxiCar> FilterByLicensePlate(List<TaxiCar> cars, string filterValue)
         {
-            if (car.Fares.Any(f => f.PaidAmount < newFare.PaidAmount * 2))
-            {
-                FareWarning?.Invoke(this);
-            }
-
-            car.Fares.Add(newFare);
+            var filteredCars = cars.Where(l => l.LicensePlate.ToLower().Contains(filterValue.ToLower())).ToList();
+            return filteredCars;
         }
 
-        public void Filter()
+        public List<TaxiCar> FilterByDriver(List<TaxiCar> cars, string filterValue)
         {
-            var cars = context.GetAllCars();
+            var filteredCars = cars.Where(l => l.Driver.ToLower().Contains(filterValue.ToLower())).ToList();
+            return filteredCars;
+        }
 
-            var asd = cars.Where(l => l.Fares.Any(f => f.From == "asd"));
-
-            List<SearchOption> filterOptions = new List<SearchOption>
-                    {
-                        new("Kisebb, mint",     () => {return 0; }),
-                        new("Nagyobb, mint",    () => {return 1; }),
-                        new("Egyenlő",          () => {return 2; })
-                    };
-
-            List<Option> menuOptions = new List<Option>() {
-                new("Rendszám", () =>
-                {
-                    string filterValue = ReadPrompt("Rendszám: ");
-                    var filteredCars = cars.Where(l => l.LicensePlate.Contains(filterValue)).ToList();
-                    cars = filteredCars;
-                }),
-                new("Sofőr", () =>
-                {
-                    string filterValue = ReadPrompt("Sofőr: ");
-                    var filteredCars = cars.Where(l => l.Driver.Contains(filterValue)).ToList();
-                    cars = filteredCars;
-                }),
-                new("Indulás helye", () =>
-                {
-                    string filterValue = ReadPrompt("Indulás helye: ");
-                    var filteredCars = cars.Where(l => l.Fares.Any(f => f.From.Contains(filterValue)))
+        public List<TaxiCar> FilterByFromLocation(List<TaxiCar> cars, string filterValue)
+        {
+            var filteredCars = cars.Where(l => l.Fares.Any(f => f.From.ToLower().Contains(filterValue.ToLower())))
                                            .Select(car => new TaxiCar(
                                                car.Driver,
                                                car.LicensePlate,
-                                               car.Fares.Where(f => f.From.Contains(filterValue)).ToList()))
+                                               car.Fares.Where(f => f.From.ToLower().Contains(filterValue.ToLower())).ToList()))
                                            .Where(car => car.Fares.Any()).ToList();
-                    cars = filteredCars;
-                }),
-                new("Érkezés helye", () =>
-                {
-                    string filterValue = ReadPrompt("Érkezés helye: ");
-                    var filteredCars = cars.Where(l => l.Fares.Any(f => f.To.Contains(filterValue)))
+            return filteredCars;
+        }
+
+        public List<TaxiCar> FilterByToLocation(List<TaxiCar> cars, string filterValue)
+        {
+            var filteredCars = cars.Where(l => l.Fares.Any(f => f.To.ToLower().Contains(filterValue.ToLower())))
                                            .Select(car => new TaxiCar(
                                                car.Driver,
                                                car.LicensePlate,
-                                               car.Fares.Where(f => f.To.Contains(filterValue)).ToList()))
+                                               car.Fares.Where(f => f.To.ToLower().Contains(filterValue.ToLower())).ToList()))
                                            .Where(car => car.Fares.Any()).ToList();
-                    cars = filteredCars;
-                }),
-                new("Megtett távolság", () =>
-                {
-                    SearchOption filterMethod = AnsiConsole.Prompt(
-                        new SelectionPrompt<SearchOption>()
-                        .Title("Keresés módja: ")
-                        .AddChoices(filterOptions));
+            return filteredCars;
+        }
 
-                    if(filterMethod.func.Invoke() == 0)
-                    {
-                        var filterValue = int.Parse(ReadPrompt("Megtett távolság kisebb mint: "));
-                        var filteredCars = cars.Where(car => car.Fares.Any(fare => fare.Distance < filterValue)).Select(
-                            car => new TaxiCar(
-                                car.LicensePlate,
-                                car.Driver,
-                                car.Fares.Where(f => f.Distance < filterValue).ToList()))
-                        .Where(car => car.Fares.Any()).ToList();
-                        cars = filteredCars;
-                    }
-                    else if(filterMethod.func.Invoke() == 1)
-                    {
-                        var filterValue = int.Parse(ReadPrompt("Megtett távolság nagyobb mint: "));
-                        var filteredCars = cars.Where(car => car.Fares.Any(fare => fare.Distance > filterValue)).Select(
-                            car => new TaxiCar(
-                                car.LicensePlate,
-                                car.Driver,
-                                car.Fares.Where(f => f.Distance > filterValue).ToList()))
-                        .Where(car => car.Fares.Any()).ToList();
-                        cars = filteredCars;
-                    }
-                    else
-                    {
-                        var filterValue = int.Parse(ReadPrompt("Megtett távolság egyenlő: "));
-                        var filteredCars = cars.Where(car => car.Fares.Any(fare => fare.Distance == filterValue)).Select(
-                            car => new TaxiCar(
-                                car.LicensePlate,
-                                car.Driver,
-                                car.Fares.Where(f => f.Distance == filterValue).ToList()))
-                        .Where(car => car.Fares.Any()).ToList();
-                        cars = filteredCars;
-                    }
-                }),
-                new("Fizetett összeg", () =>
-                {
-                    SearchOption filterMethod = AnsiConsole.Prompt(
-                        new SelectionPrompt<SearchOption>()
-                        .Title("Keresés módja: ")
-                        .AddChoices(filterOptions));
+        public List<TaxiCar> FilterByDistance(List<TaxiCar> cars, int filterValue, Func<int, int, bool> comparisonFunc)
+        {
+            var filteredCars = cars
+                        .Where(car => car.Fares.Any(fare => comparisonFunc(fare.Distance, filterValue)))
+                        .Select(car => new TaxiCar(
+                            car.LicensePlate,
+                            car.Driver,
+                            car.Fares.Where(fare => comparisonFunc(fare.Distance, filterValue)).ToList()))
+                        .Where(car => car.Fares.Any())
+                        .ToList();
+            return filteredCars;
+        }
 
-                    if(filterMethod.func.Invoke() == 0)
-                    {
-                        var filterValue = int.Parse(ReadPrompt("Fizetett összeg kisebb mint: "));
-                        var filteredCars = cars.Where(car => car.Fares.Any(fare => fare.PaidAmount < filterValue)).Select(
-                            car => new TaxiCar(
-                                car.LicensePlate,
-                                car.Driver,
-                                car.Fares.Where(f => f.PaidAmount < filterValue).ToList()))
-                        .Where(car => car.Fares.Any()).ToList();
-                        cars = filteredCars;
-                    }
-                    else if(filterMethod.func.Invoke() == 1)
-                    {
-                        var filterValue = int.Parse(ReadPrompt("Fizetett összeg nagyobb mint: "));
-                        var filteredCars = cars.Where(car => car.Fares.Any(fare => fare.PaidAmount > filterValue)).Select(
-                            car => new TaxiCar(
-                                car.LicensePlate,
-                                car.Driver,
-                                car.Fares.Where(f => f.PaidAmount > filterValue).ToList()))
-                        .Where(car => car.Fares.Any()).ToList();
-                        cars = filteredCars;
-                    }
-                    else
-                    {
-                        var filterValue = int.Parse(ReadPrompt("Fizetett összeg egyenlő: "));
-                        var filteredCars = cars.Where(car => car.Fares.Any(fare => fare.PaidAmount == filterValue)).Select(
-                            car => new TaxiCar(
-                                car.LicensePlate,
-                                car.Driver,
-                                car.Fares.Where(f => f.PaidAmount == filterValue).ToList()))
-                        .Where(car => car.Fares.Any()).ToList();
-                        cars = filteredCars;
-                    }
-                })};
+        public List<TaxiCar> FilterByPaidAmount(List<TaxiCar> cars, int filterValue, Func<int, int, bool> comparisonFunc)
+        {
+            var filteredCars = cars
+                        .Where(car => car.Fares.Any(fare => comparisonFunc(fare.PaidAmount, filterValue)))
+                        .Select(car => new TaxiCar(
+                            car.LicensePlate,
+                            car.Driver,
+                            car.Fares.Where(fare => comparisonFunc(fare.PaidAmount, filterValue)).ToList()))
+                        .Where(car => car.Fares.Any())
+                        .ToList();
+            return filteredCars;
+        }
+        public async Task<List<TaxiCar>> Filter(List<Func<List<TaxiCar>, List<TaxiCar>>> filterActions)
+        {
+            var cars = await taxiContext.GetAllCars();
 
-            var filters = AnsiConsole.Prompt(
-                            new MultiSelectionPrompt<Option>()
-                                .Title("Mire szeretne rákeresni?")
-                                .InstructionsText("[blue]<space> [/][grey]- kiválasztás,\n[/][blue]<enter>[/][grey] - továbblépés[/]")
-                                .AddChoices(menuOptions));
-
-            foreach(var filter in filters)
+            foreach (var filter in filterActions)
             {
-                filter.action();
+                cars = filter(cars);    
             }
 
-            PrintCarsTree(cars);
+            return cars;
         }
-
-        public string ReadPrompt(string prompt)
+        public async void GenerateStatistics()
         {
-            return AnsiConsole.Prompt(
-                new TextPrompt<string>(prompt));
-        }
-
-
-        public void GenerateStatistics()
-        {
-            var cars = context.GetAllCars();
+            var cars = await taxiContext.GetAllCars();
             var statistics = cars
               .Select(car => new {
                   car.LicensePlate,

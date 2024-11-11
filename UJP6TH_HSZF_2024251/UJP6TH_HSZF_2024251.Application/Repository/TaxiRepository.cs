@@ -19,8 +19,10 @@ namespace UJP6TH_HSZF_2024251.Application.Repository
         {
             Task<int> Add<T>(T entity) where T : class;
             Task<int> Remove<T>(T entity) where T : class;
-            List<TaxiCar> GetAllCars();
-            Task<int> UpdateCar(TaxiCar car);
+            Task<List<TaxiCar>> GetAllCars();
+            Task UpdateCar(TaxiCar car);
+            Task<TaxiCar> GetExistingCar(string licensePlate);
+            Task<TaxiCar> GetCarById(Guid id);
         }
         public class TaxiRepository : ITaxiRepository
         {
@@ -35,9 +37,9 @@ namespace UJP6TH_HSZF_2024251.Application.Repository
                 return await context.SaveChangesAsync();
             }
 
-            public List<TaxiCar> GetAllCars()
+            public async Task<List<TaxiCar>> GetAllCars()
             {
-                return context.TaxiCars.Include(c => c.Fares).ToListAsync().Result;
+                return await context.TaxiCars.Include(c => c.Fares).ToListAsync();
             }
 
             public async Task<int> Remove<T>(T entity) where T : class
@@ -46,10 +48,48 @@ namespace UJP6TH_HSZF_2024251.Application.Repository
                 return await context.SaveChangesAsync();
             }
 
-            public async Task<int> UpdateCar(TaxiCar car)
+            public async Task UpdateCar(TaxiCar car)
             {
                 context.TaxiCars.Update(car);
-                return await context.SaveChangesAsync();
+                await context.SaveChangesAsync();
+            }
+
+            public async Task UpdateCarDriver(Guid id, string driver)
+            {
+                var toUpdate = await context.TaxiCars.Include(c => c.Fares).SingleOrDefaultAsync(c => c.TaxiID == id);
+                if (toUpdate != null)
+                {
+                    toUpdate.Driver = driver;
+                    context.TaxiCars.Update(toUpdate);
+                    await context.SaveChangesAsync();
+                };
+            }
+
+            public async Task UpdateCarLicensePlate(Guid id, string LicensePlate)
+            {
+                var toUpdate = await context.TaxiCars.Include(c => c.Fares).SingleOrDefaultAsync(c => c.TaxiID == id);
+                if (toUpdate != null)
+                {
+                    toUpdate.LicensePlate = LicensePlate;
+                    context.TaxiCars.Update(toUpdate);
+                    await context.SaveChangesAsync();
+                };
+            }
+
+            public async Task<TaxiCar> GetCarById(Guid id)
+            {
+                var car = await context.TaxiCars.Include(c => c.Fares).SingleOrDefaultAsync(c => c.TaxiID == id);
+                if (car != null) return car;
+                else throw new Exception($"[red]No car found with id [/][red]{id}[/]");
+            }
+
+            public async Task<TaxiCar> GetExistingCar(string licensePlate)
+            {
+                var car = await context.TaxiCars.Include(c => c.Fares).FirstOrDefaultAsync(tc => tc.LicensePlate == licensePlate);
+
+                //if (car == null) throw new LicensePlateException($"[red]No car found with license plate: {licensePlate}[/]");
+
+                return car;
             }
         }
     }
