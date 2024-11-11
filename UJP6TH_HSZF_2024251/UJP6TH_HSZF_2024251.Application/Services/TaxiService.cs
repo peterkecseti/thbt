@@ -25,7 +25,7 @@ namespace UJP6TH_HSZF_2024251.Application.Services
         List<TaxiCar> FilterByDistance(List<TaxiCar> cars, int filterValue, Func<int, int, bool> comparisonFunc);
         List<TaxiCar> FilterByPaidAmount(List<TaxiCar> cars, int filterValue, Func<int, int, bool> comparisonFunc);
         Task<List<TaxiCar>> Filter(List<Func<List<TaxiCar>, List<TaxiCar>>> filterActions);
-        void GenerateStatistics();
+        Task<List<TaxiCarStatistics>> GenerateStatistics();
     }
     public class TaxiService : ITaxiService
     {
@@ -205,47 +205,34 @@ namespace UJP6TH_HSZF_2024251.Application.Services
 
             return cars;
         }
-        public async void GenerateStatistics()
+        public async Task<List<TaxiCarStatistics>> GenerateStatistics()
         {
             var cars = await taxiContext.GetAllCars();
-            var statistics = cars
-              .Select(car => new
-              {
-                  car.LicensePlate,
-                  ShortTripsCount = car.Fares.Count(f => f.Distance < 10),
-                  DistanceStatistics = new
-                  {
-                      AverageDistance = car.Fares.Any() ? car.Fares.Average(f => f.Distance) : 0,
-                      ShortestTrip = car.Fares.OrderBy(f => f.Distance)
-                        .Select(f => new { f.From, f.To, f.Distance, f.PaidAmount, f.FareStartDate })
+            #pragma warning disable CS8604 // remove the annoying green underlines
+
+            var statistics = cars.Select(car => new TaxiCarStatistics(
+                car.LicensePlate,
+                car.Fares.Count(f => f.Distance < 10),
+
+                new DistanceStats(
+                    car.Fares.Any() ? car.Fares.Average(f => f.Distance) : 0,
+                    car.Fares.OrderBy(f => f.Distance)
+                        .Select(f => new TripDetails(f.From, f.To, f.Distance, f.PaidAmount, f.FareStartDate))
                         .FirstOrDefault(),
-                      LongestTrip = car.Fares.OrderByDescending(fare => fare.Distance)
-                        .Select(f => new { f.From, f.To, f.Distance, f.PaidAmount, f.FareStartDate })
+
+                    car.Fares.OrderByDescending(f => f.Distance)
+                        .Select(f => new TripDetails(f.From, f.To, f.Distance, f.PaidAmount, f.FareStartDate))
                         .FirstOrDefault()
-                  },
-                  MostFrequentDestination = car.Fares
-                  .GroupBy(f => f.To)
-                  .OrderByDescending(g => g.Count())
-                  .Select(g => new
-                  {
-                      Destination = g.Key,
-                      Count = g.Count()
-                  })
-                  .FirstOrDefault()
-              })
-              .ToList();
+                ),
+                car.Fares.GroupBy(f => f.To)
+                    .OrderByDescending(g => g.Count())
+                    .Select(g => new FrequentDestination(g.Key, g.Count()))
+                    .FirstOrDefault()
+            )).ToList();
 
-            var json = JsonConvert.SerializeObject(statistics, Formatting.Indented, new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
+            #pragma warning restore CS8604 // restore the annoying green underlines
 
-            File.WriteAllText("A:\\progi\\szfa\\statistics.json", json);
-            AnsiConsole.MarkupLine("[green]Statisztika generálva![/]");
-            Console.ReadKey();
-
-
+            return statistics;
         }
     }
 }

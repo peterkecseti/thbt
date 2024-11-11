@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.application\\services\\taxiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|solutionrelative:ujp6th_hszf_2024251.application\\services\\taxiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2BC493A-431B-4CB4-BE04-45E97BC091DD}|UJP6TH_HSZF_2024251.Console\\UJP6TH_HSZF_2024251.Console.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.console\\taxicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2BC493A-431B-4CB4-BE04-45E97BC091DD}|UJP6TH_HSZF_2024251.Console\\UJP6TH_HSZF_2024251.Console.csproj|solutionrelative:ujp6th_hszf_2024251.console\\taxicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.application\\services\\taxiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|solutionrelative:ujp6th_hszf_2024251.application\\services\\taxiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.application\\statistics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{73191E81-0497-4084-8403-42B944A83383}|UJP6TH_HSZF_2024251.Application\\UJP6TH_HSZF_2024251.Application.csproj|solutionrelative:ujp6th_hszf_2024251.application\\statistics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2BC493A-431B-4CB4-BE04-45E97BC091DD}|UJP6TH_HSZF_2024251.Console\\UJP6TH_HSZF_2024251.Console.csproj|c:\\users\\peterke\\source\\repos\\thbt\\thbt\\ujp6th_hszf_2024251\\ujp6th_hszf_2024251.console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,7 +30,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Console\\Program.cs",
               "RelativeDocumentMoniker": "UJP6TH_HSZF_2024251.Console\\Program.cs",
@@ -35,8 +39,7 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-08T09:17:18.324Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -44,26 +47,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
+              "Title": "Statistics.cs",
+              "DocumentMoniker": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\Statistics.cs",
+              "RelativeDocumentMoniker": "UJP6TH_HSZF_2024251.Application\\Statistics.cs",
+              "ToolTip": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\Statistics.cs",
+              "RelativeToolTip": "UJP6TH_HSZF_2024251.Application\\Statistics.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAA7wDYAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-11T21:41:20.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "TaxiService.cs",
               "DocumentMoniker": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\Services\\TaxiService.cs",
               "RelativeDocumentMoniker": "UJP6TH_HSZF_2024251.Application\\Services\\TaxiService.cs",
               "ToolTip": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Application\\Services\\TaxiService.cs",
               "RelativeToolTip": "UJP6TH_HSZF_2024251.Application\\Services\\TaxiService.cs",
-              "ViewState": "AQIAAI8AAAAAAAAAAIAwwKkAAAAcAAAA",
+              "ViewState": "AQIAAMgAAAAAAAAAAAAqwOUAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-11T21:27:14.075Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "TaxiController.cs",
               "DocumentMoniker": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Console\\TaxiController.cs",
               "RelativeDocumentMoniker": "UJP6TH_HSZF_2024251.Console\\TaxiController.cs",
               "ToolTip": "C:\\Users\\peterke\\source\\repos\\thbt\\thbt\\UJP6TH_HSZF_2024251\\UJP6TH_HSZF_2024251.Console\\TaxiController.cs",
               "RelativeToolTip": "UJP6TH_HSZF_2024251.Console\\TaxiController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4BAAAAAAAA",
+              "ViewState": "AQIAABsBAAAAAAAAAAAiwC8BAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-11T21:27:11.65Z",
               "EditorCaption": ""

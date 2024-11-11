@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using Newtonsoft.Json;
+using Spectre.Console;
 using UJP6TH_HSZF_2024251.Application.Services;
 using UJP6TH_HSZF_2024251.Model.Entities;
 
@@ -37,7 +38,7 @@ namespace UJP6TH_HSZF_2024251.Application
                 new("Autó módosítása", UpdateCar),
                 new("Út hozzáadása autóhóz", AddFareToCar),
                 new("Keresés", Filter),
-                new("Statisztika generálása", async ()=>{} )
+                new("Statisztika generálása", GenerateStatistics)
             };
 
             var menuValue = AnsiConsole.Prompt(
@@ -301,8 +302,21 @@ namespace UJP6TH_HSZF_2024251.Application
             // Execute the filtering in the service with the built filter actions
             var result = await taxiService.Filter(filterActions);
 
-            // holy shit it works
             await PrintCarsTree(result);
+        }
+
+        public async Task GenerateStatistics()
+        {
+            var statistics = taxiService.GenerateStatistics();
+            var json = JsonConvert.SerializeObject(statistics, Formatting.Indented, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            File.WriteAllText("A:\\progi\\szfa\\statistics.json", json);
+            AnsiConsole.MarkupLine("[green]Statisztika generálva![/]");
+            System.Console.ReadKey();
         }
     }
 }
