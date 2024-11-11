@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace UJP6TH_HSZF_2024251.Model
+namespace UJP6TH_HSZF_2024251.Model.Entities
 {
     [Table("Fares")]
     public class Fare

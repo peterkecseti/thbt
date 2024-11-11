@@ -1,20 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
 using UJP6TH_HSZF_2024251.Application;
 using UJP6TH_HSZF_2024251.Application.Repository;
 using UJP6TH_HSZF_2024251.Application.Repository.UJP6TH_HSZF_2024251.Application;
-using UJP6TH_HSZF_2024251.Model;
+using UJP6TH_HSZF_2024251.Application.Services;
 using UJP6TH_HSZF_2024251.Persistence.MsSql;
 
 

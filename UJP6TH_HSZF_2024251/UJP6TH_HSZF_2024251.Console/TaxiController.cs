@@ -1,12 +1,6 @@
 ﻿using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UJP6TH_HSZF_2024251.Model;
-using UJP6TH_HSZF_2024251.Persistence.MsSql;
+using UJP6TH_HSZF_2024251.Application.Services;
+using UJP6TH_HSZF_2024251.Model.Entities;
 
 namespace UJP6TH_HSZF_2024251.Application
 {
@@ -19,6 +13,12 @@ namespace UJP6TH_HSZF_2024251.Application
         {
             this.taxiService = taxiService;
             this.fareService = fareService;
+            Fare.HighPaidAmountDetected += OnHighPaidAmountDetected;
+        }
+
+        private static void OnHighPaidAmountDetected(Fare fare)
+        {
+            AnsiConsole.MarkupLine($"[Red]Az új út fizetett összege [/][grey]({fare.PaidAmount})[/][red] több mint kétszerese a korábbi maximum összegnek![/]");
         }
 
         public async Task RunAsync()
@@ -60,10 +60,10 @@ namespace UJP6TH_HSZF_2024251.Application
             }
             catch (Exception ex)
             {
-                AnsiConsole.MarkupLine($"[red]Hiba történt:[/]\n[grey]{ex.Message}[/]");
+                AnsiConsole.MarkupLine($"[/]\n[red]{ex.Message}[/]");
             }
 
-            Console.ReadKey();
+            System.Console.ReadKey();
             AnsiConsole.Clear();
         }
         public async Task ListAllCars() => await PrintCarsTree(taxiService.GetAllCars().Result);
@@ -102,7 +102,7 @@ namespace UJP6TH_HSZF_2024251.Application
             }
 
             AnsiConsole.Write(root);
-            Console.ReadLine();
+            System.Console.ReadLine();
             AnsiConsole.Clear();
         }
 
@@ -129,7 +129,7 @@ namespace UJP6TH_HSZF_2024251.Application
                 }
 
                 AnsiConsole.MarkupLine("[green]Autó sikeresen hozzáadva![/]");
-                Console.ReadKey();
+                System.Console.ReadKey();
             }
             catch(LicensePlateException ex)
             {
@@ -204,7 +204,7 @@ namespace UJP6TH_HSZF_2024251.Application
             if (cars.Count == 0)
             {
                 AnsiConsole.MarkupLine("[red]Nincsenek felvett autók![/]");
-                Console.ReadLine();
+                System.Console.ReadLine();
                 return;
             }
 
@@ -227,7 +227,7 @@ namespace UJP6TH_HSZF_2024251.Application
             await taxiService.AddFareToCar(from, to, distance, paidAmount, selectedCar);
 
             AnsiConsole.MarkupLine("[green]Út felvétele sikeres![/]");
-            Console.ReadKey();
+            System.Console.ReadKey();
         }
 
         public async Task Filter()

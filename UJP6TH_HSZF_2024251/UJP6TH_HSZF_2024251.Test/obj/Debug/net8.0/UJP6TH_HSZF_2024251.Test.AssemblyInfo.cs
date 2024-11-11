@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UJP6TH_HSZF_2024251.Test")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+786bbf0171d36275de2f2d9d3658a57efec6577d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+22b485757a8d78933a7a8b7ffa01a7b921736ab0")]
 [assembly: System.Reflection.AssemblyProductAttribute("UJP6TH_HSZF_2024251.Test")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UJP6TH_HSZF_2024251.Test")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -3,10 +3,10 @@ using Spectre.Console;
 using UJP6TH_HSZF_2024251.Application.Dto;
 using UJP6TH_HSZF_2024251.Application.Repository;
 using UJP6TH_HSZF_2024251.Application.Repository.UJP6TH_HSZF_2024251.Application;
-using UJP6TH_HSZF_2024251.Model;
+using UJP6TH_HSZF_2024251.Model.Entities;
 
 
-namespace UJP6TH_HSZF_2024251.Application
+namespace UJP6TH_HSZF_2024251.Application.Services
 {
     public interface ITaxiService
     {
@@ -31,21 +31,19 @@ namespace UJP6TH_HSZF_2024251.Application
     {
         public ITaxiRepository taxiContext;
         public IFareRepository fareContext;
-        public TaxiService(ITaxiRepository taxiContext, IFareRepository fareContext) {
+        public TaxiService(ITaxiRepository taxiContext, IFareRepository fareContext)
+        {
             this.taxiContext = taxiContext;
             this.fareContext = fareContext;
-            Fare.HighPaidAmountDetected += OnHighPaidAmountDetected;
+            
         }
 
         // event
         public delegate void FareWarningEventHandler(object sender);
         public event FareWarningEventHandler FareWarning;
 
+
         
-        private void OnHighPaidAmountDetected(Fare fare)
-        {
-            AnsiConsole.MarkupLine($"[Red]Az új út fizetett összege [/][grey]({fare.PaidAmount})[/][red] több mint kétszerese a korábbi maximum összegnek![/]");
-        }
         public async Task AddData(string path)
         {
             // Read JSON content from the provided path
@@ -133,7 +131,7 @@ namespace UJP6TH_HSZF_2024251.Application
 
             var allFares = fareContext.GetAllFares().Result;
             Fare.CheckForHighPaidAmount(fare, allFares);
-            
+
             await taxiContext.Add(fare);
         }
 
@@ -151,49 +149,49 @@ namespace UJP6TH_HSZF_2024251.Application
 
         public List<TaxiCar> FilterByFromLocation(List<TaxiCar> cars, string filterValue)
         {
-            var filteredCars = cars.Where(l => l.Fares.Any(f => f.From.ToLower().Contains(filterValue.ToLower())))
-                                           .Select(car => new TaxiCar(
-                                               car.Driver,
-                                               car.LicensePlate,
-                                               car.Fares.Where(f => f.From.ToLower().Contains(filterValue.ToLower())).ToList()))
-                                           .Where(car => car.Fares.Any()).ToList();
+            var filteredCars = cars
+                    .Where(l => l.Fares.Any(f => f.From.ToLower().Contains(filterValue.ToLower())))
+                    .Select(car => new TaxiCar(
+                        car.Driver,
+                        car.LicensePlate,
+                        car.Fares.Where(f => f.From.ToLower().Contains(filterValue.ToLower())).ToList()))
+                            .Where(car => car.Fares.Any()).ToList();
             return filteredCars;
         }
 
         public List<TaxiCar> FilterByToLocation(List<TaxiCar> cars, string filterValue)
         {
-            var filteredCars = cars.Where(l => l.Fares.Any(f => f.To.ToLower().Contains(filterValue.ToLower())))
-                                           .Select(car => new TaxiCar(
-                                               car.Driver,
-                                               car.LicensePlate,
-                                               car.Fares.Where(f => f.To.ToLower().Contains(filterValue.ToLower())).ToList()))
-                                           .Where(car => car.Fares.Any()).ToList();
+            var filteredCars = cars
+                    .Where(l => l.Fares.Any(f => f.To.ToLower().Contains(filterValue.ToLower())))
+                    .Select(car => new TaxiCar(
+                        car.Driver,
+                        car.LicensePlate,
+                        car.Fares.Where(f => f.To.ToLower().Contains(filterValue.ToLower())).ToList()))
+                            .Where(car => car.Fares.Any()).ToList();
             return filteredCars;
         }
 
         public List<TaxiCar> FilterByDistance(List<TaxiCar> cars, int filterValue, Func<int, int, bool> comparisonFunc)
         {
             var filteredCars = cars
-                        .Where(car => car.Fares.Any(fare => comparisonFunc(fare.Distance, filterValue)))
-                        .Select(car => new TaxiCar(
-                            car.LicensePlate,
-                            car.Driver,
-                            car.Fares.Where(fare => comparisonFunc(fare.Distance, filterValue)).ToList()))
-                        .Where(car => car.Fares.Any())
-                        .ToList();
+                    .Where(car => car.Fares.Any(fare => comparisonFunc(fare.Distance, filterValue)))
+                    .Select(car => new TaxiCar(
+                        car.LicensePlate,
+                        car.Driver,
+                        car.Fares.Where(fare => comparisonFunc(fare.Distance, filterValue)).ToList()))
+                            .Where(car => car.Fares.Any()).ToList();
             return filteredCars;
         }
 
         public List<TaxiCar> FilterByPaidAmount(List<TaxiCar> cars, int filterValue, Func<int, int, bool> comparisonFunc)
         {
             var filteredCars = cars
-                        .Where(car => car.Fares.Any(fare => comparisonFunc(fare.PaidAmount, filterValue)))
-                        .Select(car => new TaxiCar(
-                            car.LicensePlate,
-                            car.Driver,
-                            car.Fares.Where(fare => comparisonFunc(fare.PaidAmount, filterValue)).ToList()))
-                        .Where(car => car.Fares.Any())
-                        .ToList();
+                    .Where(car => car.Fares.Any(fare => comparisonFunc(fare.PaidAmount, filterValue)))
+                    .Select(car => new TaxiCar(
+                        car.LicensePlate,
+                        car.Driver,
+                        car.Fares.Where(fare => comparisonFunc(fare.PaidAmount, filterValue)).ToList()))
+                            .Where(car => car.Fares.Any()).ToList();
             return filteredCars;
         }
         public async Task<List<TaxiCar>> Filter(List<Func<List<TaxiCar>, List<TaxiCar>>> filterActions)
@@ -202,7 +200,7 @@ namespace UJP6TH_HSZF_2024251.Application
 
             foreach (var filter in filterActions)
             {
-                cars = filter(cars);    
+                cars = filter(cars);
             }
 
             return cars;
@@ -211,14 +209,15 @@ namespace UJP6TH_HSZF_2024251.Application
         {
             var cars = await taxiContext.GetAllCars();
             var statistics = cars
-              .Select(car => new {
+              .Select(car => new
+              {
                   car.LicensePlate,
                   ShortTripsCount = car.Fares.Count(f => f.Distance < 10),
                   DistanceStatistics = new
                   {
                       AverageDistance = car.Fares.Any() ? car.Fares.Average(f => f.Distance) : 0,
                       ShortestTrip = car.Fares.OrderBy(f => f.Distance)
-                        .Select(f => new {f.From, f.To, f.Distance, f.PaidAmount, f.FareStartDate})
+                        .Select(f => new { f.From, f.To, f.Distance, f.PaidAmount, f.FareStartDate })
                         .FirstOrDefault(),
                       LongestTrip = car.Fares.OrderByDescending(fare => fare.Distance)
                         .Select(f => new { f.From, f.To, f.Distance, f.PaidAmount, f.FareStartDate })
@@ -227,7 +226,8 @@ namespace UJP6TH_HSZF_2024251.Application
                   MostFrequentDestination = car.Fares
                   .GroupBy(f => f.To)
                   .OrderByDescending(g => g.Count())
-                  .Select(g => new {
+                  .Select(g => new
+                  {
                       Destination = g.Key,
                       Count = g.Count()
                   })

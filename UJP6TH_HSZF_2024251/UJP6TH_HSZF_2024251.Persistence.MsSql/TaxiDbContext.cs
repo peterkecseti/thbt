@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using UJP6TH_HSZF_2024251.Model;
+using UJP6TH_HSZF_2024251.Model.Entities;
 
 namespace UJP6TH_HSZF_2024251.Persistence.MsSql
 {
