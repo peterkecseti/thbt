@@ -24,7 +24,7 @@ namespace UJP6TH_HSZF_2024251.Application.Services
         List<TaxiCar> FilterByToLocation(List<TaxiCar> cars, string filterValue);
         List<TaxiCar> FilterByDistance(List<TaxiCar> cars, int filterValue, Func<int, int, bool> comparisonFunc);
         List<TaxiCar> FilterByPaidAmount(List<TaxiCar> cars, int filterValue, Func<int, int, bool> comparisonFunc);
-        Task<List<TaxiCar>> Filter(List<Func<List<TaxiCar>, List<TaxiCar>>> filterActions);
+        Task<List<TaxiCar>> Filter(List<Func<List<TaxiCar>, List<TaxiCar>>> filterActions, List<TaxiCar> toFilter);
         Task<List<TaxiCarStatistics>> GenerateStatistics();
     }
     public class TaxiService : ITaxiService
@@ -35,7 +35,6 @@ namespace UJP6TH_HSZF_2024251.Application.Services
         {
             this.taxiContext = taxiContext;
             this.fareContext = fareContext;
-            
         }
 
         // event
@@ -46,11 +45,9 @@ namespace UJP6TH_HSZF_2024251.Application.Services
         
         public async Task AddData(string path)
         {
-            // Read JSON content from the provided path
-            var json = File.ReadAllText(path); // Use the path parameter
+            var json = File.ReadAllText(path);
             var taxiData = JsonConvert.DeserializeObject<RootTaxiDto>(json);
 
-            // Iterate through the deserialized data and add it to the context
             foreach (var taxiCarData in taxiData.TaxiCars)
             {
                 string licensePlate = taxiCarData.LicensePlate;
@@ -83,14 +80,12 @@ namespace UJP6TH_HSZF_2024251.Application.Services
                 }
             }
         }
-
         public async Task<List<TaxiCar>> GetAllCars()
         {
             return await taxiContext.GetAllCars();
         }
         public async Task AddCar(string licensePlate, string driver)
         {
-            // Save to database
             if (!LicensePlateExists(licensePlate).Result)
             {
                 TaxiCar newCar = new TaxiCar(licensePlate, driver);
@@ -108,7 +103,6 @@ namespace UJP6TH_HSZF_2024251.Application.Services
             if (taxiCar == null) return false;
             else return taxiCar.LicensePlate == licensePlate;
         }
-        public async Task DeleteCar(TaxiCar toDelete) => await taxiContext.Remove(toDelete);
         public async Task UpdateCar(TaxiCar toUpdate, string newLicensePlate = null)
         {
             if (!string.IsNullOrEmpty(newLicensePlate))
@@ -124,6 +118,7 @@ namespace UJP6TH_HSZF_2024251.Application.Services
 
             await taxiContext.UpdateCar(toUpdate);
         }
+        public async Task DeleteCar(TaxiCar toDelete) => await taxiContext.Remove(toDelete);
         public async Task AddFareToCar(string from, string to, int distance, int paidAmount, TaxiCar selectedCar)
         {
             DateTime now = DateTime.Now;
@@ -194,10 +189,15 @@ namespace UJP6TH_HSZF_2024251.Application.Services
                             .Where(car => car.Fares.Any()).ToList();
             return filteredCars;
         }
-        public async Task<List<TaxiCar>> Filter(List<Func<List<TaxiCar>, List<TaxiCar>>> filterActions)
+        public async Task<List<TaxiCar>> Filter(List<Func<List<TaxiCar>, List<TaxiCar>>> filterActions, List<TaxiCar> toFilter = null)
         {
-            var cars = await taxiContext.GetAllCars();
+            var cars = new List<TaxiCar>();
+            if (toFilter == null)
+                cars = await taxiContext.GetAllCars();
 
+            else cars = toFilter;
+
+            // Run the entire cars list on the selected filtering options
             foreach (var filter in filterActions)
             {
                 cars = filter(cars);

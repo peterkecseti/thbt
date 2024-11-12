@@ -18,7 +18,6 @@ namespace UJP6TH_HSZF_2024251.Console
         {
             Init();
 
-            // Resolve the TaxiController and run the main async loop
             var taxiController = serviceProvider.GetRequiredService<TaxiController>();
             await taxiController.RunAsync();
         }
@@ -36,11 +35,9 @@ namespace UJP6TH_HSZF_2024251.Console
 
             // Register services and repositories
             services.AddScoped<ITaxiService, TaxiService>();
-            services.AddScoped<IFareService, FareService>(); // Add IFareService and its implementation
+            services.AddScoped<IFareService, FareService>();
             services.AddScoped<ITaxiRepository, TaxiRepository>();
             services.AddScoped<IFareRepository, FareRepository>();
-
-            // Register the controller
             services.AddScoped<TaxiController>();
 
             // Build the service provider

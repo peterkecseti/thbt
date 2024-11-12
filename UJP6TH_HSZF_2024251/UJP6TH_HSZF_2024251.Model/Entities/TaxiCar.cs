@@ -31,5 +31,20 @@ namespace UJP6TH_HSZF_2024251.Model.Entities
             Fares = fares;
         }
         public override string ToString() => $"{LicensePlate} ({Driver})";
+        
+        // Overrides to help tests complete
+        public override bool Equals(object obj)
+        {
+            if (obj is not TaxiCar other) return false;
+
+            return LicensePlate == other.LicensePlate &&
+                   Driver == other.Driver &&
+                   Fares.SequenceEqual(other.Fares);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(LicensePlate, Driver, Fares);
+        }
     }
 }

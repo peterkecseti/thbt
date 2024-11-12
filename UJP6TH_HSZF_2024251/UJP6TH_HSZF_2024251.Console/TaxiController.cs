@@ -14,6 +14,8 @@ namespace UJP6TH_HSZF_2024251.Application
         {
             this.taxiService = taxiService;
             this.fareService = fareService;
+
+            // event subscription
             Fare.HighPaidAmountDetected += OnHighPaidAmountDetected;
         }
 
@@ -31,14 +33,14 @@ namespace UJP6TH_HSZF_2024251.Application
 
             List<Option> MenuOptions = new List<Option>()
             {
-                new("Autók beolvasása JSON-ból", AddData),
-                new("Összes autó kiírása", ListAllCars),
-                new("Autó felvétele", AddCar),
-                new("Autó törlése", DeleteCar),
-                new("Autó módosítása", UpdateCar),
-                new("Út hozzáadása autóhóz", AddFareToCar),
-                new("Keresés", Filter),
-                new("Statisztika generálása", GenerateStatistics)
+                new("\U0001F4C1 Autók beolvasása JSON-ból", AddData),
+                new("\U0001F697 Összes autó kiírása", ListAllCars),
+                new("\u2795 Autó felvétele", AddCar),
+                new("\u2796 Autó törlése", DeleteCar),
+                new("\U0001F58A  Autó módosítása", UpdateCar),
+                new("\U0001F4CC Út hozzáadása autóhóz", AddFareToCar),
+                new("\U0001F50D Keresés", async () => {Filter();}),
+                new("\U0001F4CA Statisztika generálása", GenerateStatistics)
             };
 
             var menuValue = AnsiConsole.Prompt(
@@ -52,7 +54,7 @@ namespace UJP6TH_HSZF_2024251.Application
 
         public async Task AddData()
         {
-            string path = ReadPrompt("Fájl elérési útvonala: ");
+            string path = Browser.GetPath(BrowserType.File, "json");
             try
             {
                 await taxiService.AddData(path);
@@ -70,7 +72,6 @@ namespace UJP6TH_HSZF_2024251.Application
         public async Task ListAllCars() => await PrintCarsTree(taxiService.GetAllCars().Result);
 
         public string ReadPrompt(string prompt) => AnsiConsole.Prompt(new TextPrompt<string>(prompt));
-
         public async Task PrintCarsTree(List<TaxiCar> cars)
         {
             if (cars.Count == 0)
@@ -231,57 +232,76 @@ namespace UJP6TH_HSZF_2024251.Application
             System.Console.ReadKey();
         }
 
-        public async Task Filter()
+        public async Task Filter(List<TaxiCar> toFilter = null)
         {
-            var comparisonFuncs = new Dictionary<int, Func<int, int, bool>>
-            {
-                { 0, (paidAmount, filterValue) => paidAmount < filterValue },
-                { 1, (paidAmount, filterValue) => paidAmount > filterValue },
-                { 2, (paidAmount, filterValue) => paidAmount == filterValue }
-            };
+            
 
+            // List to store desired filtering methods
             List<Func<List<TaxiCar>, List<TaxiCar>>> filterActions = new List<Func<List<TaxiCar>, List<TaxiCar>>>();
 
-            List<SearchOption> filterOptions = new List<SearchOption>
+            // Menu options for selecting int operator on numeric filtering
+            List<SearchOptions> filterOptions = new List<SearchOptions>
             {
                 new("kisebb, mint",     () => 0),
                 new("nagyobb, mint",    () => 1),
                 new("egyenlő",          () => 2)
             };
+
+            // Returns int operator based on number value
+            var comparisonFuncs = new Dictionary<int, Func<int, int, bool>>
+            {
+                { 0, (actual, filterValue) => actual < filterValue },
+                { 1, (actual, filterValue) => actual > filterValue },
+                { 2, (actual, filterValue) => actual == filterValue }
+            };
+
+            // List that stores every filtering option
             List<Option> menuOptions = new List<Option>
             {
                 new("Rendszám", async () =>
                 {
-                    string licensePlate = ReadPrompt("Rendszám: ");
-                    filterActions.Add(cars => taxiService.FilterByLicensePlate(cars, licensePlate));
+                    string filterValue = ReadPrompt("Rendszám: ");
+
+                    // Add filter to the action pool
+                    filterActions.Add(cars => taxiService.FilterByLicensePlate(cars, filterValue));
                 }),
                 new("Sofőr", async () =>
                 {
-                    string driver = ReadPrompt("Sofőr: ");
-                    filterActions.Add(cars => taxiService.FilterByDriver(cars, driver));
+                    string filterValue = ReadPrompt("Sofőr: ");
+
+                    // Add filter to the action pool
+                    filterActions.Add(cars => taxiService.FilterByDriver(cars, filterValue));
                 }),
                 new("Fizetett összeg", async () =>
                 {
                     string title = "Fizetett összeg";
-                    SearchOption filterMethod = AnsiConsole.Prompt( // Prompt the user to select filtering method
-                        new SelectionPrompt<SearchOption>()
+                    SearchOptions filterMethod = AnsiConsole.Prompt( // Prompt the user to select filtering method
+                        new SelectionPrompt<SearchOptions>()
                             .Title(title)
                             .AddChoices(filterOptions));
 
                     int filterValue = int.Parse(ReadPrompt($"{title} {filterOptions[filterMethod.func.Invoke()].name}:"));
-                    var paidAmountComparison = comparisonFuncs[filterMethod.func.Invoke()]; // Get the int operator for the filtering
+
+                     // Get the int operator for the filtering
+                    var paidAmountComparison = comparisonFuncs[filterMethod.func.Invoke()];
+
+                    // Add filter to the action pool
                     filterActions.Add(cars => taxiService.FilterByPaidAmount(cars, filterValue, paidAmountComparison));
                 }),
                 new("Megtett távolság", async () =>
                 {
                     string title = "Megtett távolság";
-                    SearchOption filterMethod = AnsiConsole.Prompt( // Prompt the user to select filtering method
-                        new SelectionPrompt<SearchOption>()
+                    SearchOptions filterMethod = AnsiConsole.Prompt( // Prompt the user to select filtering method
+                        new SelectionPrompt<SearchOptions>()
                             .Title(title)
                             .AddChoices(filterOptions));
 
                     int filterValue = int.Parse(ReadPrompt($"{title} {filterOptions[filterMethod.func.Invoke()].name}:"));
-                    var distanceComparison = comparisonFuncs[filterMethod.func.Invoke()]; // Get the int operator for the filtering
+
+                    // Get the int operator for the filtering
+                    var distanceComparison = comparisonFuncs[filterMethod.func.Invoke()]; 
+
+                    // Add filter to the action pool
                     filterActions.Add(cars => taxiService.FilterByDistance(cars, filterValue, distanceComparison));
                 })
             };
@@ -293,20 +313,39 @@ namespace UJP6TH_HSZF_2024251.Application
                     .InstructionsText("[blue]<space> [/][grey]- kiválasztás,\n[/][blue]<enter>[/][grey] - továbblépés[/]")
                     .AddChoices(menuOptions));
 
-            // Execute each selected option to collect input values
+            // Execute each selected filtering criteria to collect input values
             foreach (var option in selectedOptions)
             {
                 await option.ActionAsync();
             }
 
-            // Execute the filtering in the service with the built filter actions
-            var result = await taxiService.Filter(filterActions);
+            // Execute the filtering in the service
+            var result = await taxiService.Filter(filterActions, toFilter);
 
+            // Print the result in tree format
             await PrintCarsTree(result);
+
+            // Menu options to determine whether or not to continue filtering
+            List<SearchOptions> continueFilteringOptions = new List<SearchOptions>
+            {
+                new("Igen",   () => 1),
+                new("Nem",    () => 0)
+            };
+
+            var answer = AnsiConsole.Prompt(
+                new SelectionPrompt<SearchOptions>()
+                    .Title("Szeretné tovább szűrni a keresés eredményét?")
+                    .AddChoices(continueFilteringOptions));
+
+            // Recall the filter function with the previously gotten results
+            if (answer.func.Invoke() == 1) await Filter(result);
         }
 
         public async Task GenerateStatistics()
         {
+
+            string path = Browser.GetPath(BrowserType.Folder);
+
             var statistics = taxiService.GenerateStatistics();
             var json = JsonConvert.SerializeObject(statistics, Formatting.Indented, new JsonSerializerSettings
             {
@@ -314,7 +353,7 @@ namespace UJP6TH_HSZF_2024251.Application
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
 
-            File.WriteAllText("A:\\progi\\szfa\\statistics.json", json);
+            File.WriteAllText(path + "\\statistics.json", json);
             AnsiConsole.MarkupLine("[green]Statisztika generálva![/]");
             System.Console.ReadKey();
         }

@@ -1,0 +1,18 @@
+
+            {
+            "TaxiCars": [
+                    {
+                    "LicensePlate": "DA AA-333",
+                    "Driver": "Bartos Csaba István",
+                    "Fares": [
+                            {
+                            "From": "Budapest, Népliget",
+                            "To": "Dabas, buszállomás",
+                            "Distance": 50,
+                            "PaidAmount": 22000,
+                            "FareStartDate": "2024-08-15T00:00:00Z"
+                            }
+                        ]
+                    }
+                ]
+            }
