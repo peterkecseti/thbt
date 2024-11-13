@@ -20,7 +20,10 @@ namespace UJP6TH_HSZF_2024251.Application
             {
                 // Get all drives available on the system
                 DriveInfo[] allDrives = DriveInfo.GetDrives();
-                List<SearchOptions> driveOptions = new List<SearchOptions>();
+                List<SearchOptions> driveOptions = new List<SearchOptions>()
+                {
+                    new("Beépített adatok betöltése", "!!")
+                };
 
                 foreach (DriveInfo driveInfo in allDrives)
                 {
@@ -33,13 +36,16 @@ namespace UJP6TH_HSZF_2024251.Application
                         .AddChoices(driveOptions)
                 );
 
+                if (drive.path == "!!") return "taxi.json";
+
                 string currentDirectory = drive.path;
 
                 while (true)
                 {
                     List<SearchOptions> folderOptions = new List<SearchOptions>
                     {
-                        new($"\U0001F519 Egy szinttel feljebb", "..") // Back option
+                        new($"\U0001F519 Egy szinttel feljebb", ".."), // Back option
+                        new($"Beépített adatok betöltése", "!!")
                     };
 
                     // get subdirectories in the current directory
@@ -95,6 +101,11 @@ namespace UJP6TH_HSZF_2024251.Application
 
                         currentDirectory = parentDirectory;
                         continue;
+                    }
+
+                    if( selectedOption.path == "!!")
+                    {
+                        return "taxi.json";
                     }
 
                     // handle return based on browser mode

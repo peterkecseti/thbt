@@ -31,16 +31,7 @@ namespace UJP6TH_HSZF_2024251.Model.Entities
         public int Distance { get; set; }
         public DateTime FareStartDate { get; set; }
         public virtual TaxiCar TaxiCar { get; set; }
-        public static event Action<Fare> HighPaidAmountDetected;
-        public static void CheckForHighPaidAmount(Fare newFare, IEnumerable<Fare> allFares)
-        {
-            int maxPaidAmount = allFares.Any() ? allFares.Max(f => f.PaidAmount) : 0;
-
-            if (newFare.PaidAmount > maxPaidAmount * 2)
-            {
-                HighPaidAmountDetected?.Invoke(newFare);
-            }
-        }
+        public event Action<Fare> HighPaidAmountDetected;
 
         // Overrides to help tests complete
         public override bool Equals(object obj)

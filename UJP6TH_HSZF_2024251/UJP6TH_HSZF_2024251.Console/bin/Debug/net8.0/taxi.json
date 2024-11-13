@@ -1,0 +1,125 @@
+{
+    "TaxiCars": [
+        {
+            "LicensePlate": "DA AA-333",
+            "Driver": "Bartos Csaba István",
+            "Fares": [
+                {
+                    "From": "Budapest, Népliget",
+                    "To": "Dabas, buszállomás",
+                    "Distance": 50,
+                    "PaidAmount": 22000,
+                    "FareStartDate": "2024-08-15T00:00:00Z"
+                },
+                {
+                    "From": "Kőbánya-Kispest",
+                    "To": "Monor",
+                    "Distance": 30,
+                    "PaidAmount": 42100,
+                    "FareStartDate": "2024-08-20T22:00:00Z"
+                },
+                {
+                    "From": "Budapest, Keleti Pályaudvar",
+                    "To": "Gyál, Vasútállomás",
+                    "Distance": 20,
+                    "PaidAmount": 15000,
+                    "FareStartDate": "2024-09-05T09:30:00Z"
+                }
+            ]
+        },
+        {
+            "LicensePlate": "RO LF-432",
+            "Driver": "Lakatos Brendon",
+            "Fares": [
+                {
+                    "From": "Miskolc",
+                    "To": "Felsőzsolca",
+                    "Distance": 32,
+                    "PaidAmount": 25000,
+                    "FareStartDate": "2024-04-01T14:00:00Z"
+                },
+                {
+                    "From": "Miskolc",
+                    "To": "Tokaj",
+                    "Distance": 60,
+                    "PaidAmount": 32000,
+                    "FareStartDate": "2024-07-20T16:45:00Z"
+                }
+            ]
+        },
+        {
+            "LicensePlate": "HU XP-789",
+            "Driver": "Kovács Péter",
+            "Fares": [
+                {
+                    "From": "Debrecen, Nagytemplom",
+                    "To": "Hajdúszoboszló, Strand",
+                    "Distance": 20,
+                    "PaidAmount": 10000,
+                    "FareStartDate": "2024-05-10T10:00:00Z"
+                },
+                {
+                    "From": "Debrecen, Egyetem tér",
+                    "To": "Nyíregyháza, Vasútállomás",
+                    "Distance": 45,
+                    "PaidAmount": 20000,
+                    "FareStartDate": "2024-06-15T08:30:00Z"
+                },
+                {
+                    "From": "Debrecen, Piac utca",
+                    "To": "Debrecen, Repülőtér",
+                    "Distance": 12,
+                    "PaidAmount": 7000,
+                    "FareStartDate": "2024-08-10T18:00:00Z"
+                }
+            ]
+        },
+        {
+            "LicensePlate": "SZ JA-159",
+            "Driver": "Szabó Tamás",
+            "Fares": [
+                {
+                    "From": "Szeged, Dóm tér",
+                    "To": "Hódmezővásárhely, Fő tér",
+                    "Distance": 26,
+                    "PaidAmount": 15000,
+                    "FareStartDate": "2024-03-18T12:00:00Z"
+                },
+                {
+                    "From": "Szeged, Vasútállomás",
+                    "To": "Röszke, Határátkelő",
+                    "Distance": 15,
+                    "PaidAmount": 10000,
+                    "FareStartDate": "2024-04-20T09:00:00Z"
+                }
+            ]
+        },
+        {
+            "LicensePlate": "DE GG-555",
+            "Driver": "Molnár László",
+            "Fares": [
+                {
+                    "From": "Pécs, Árkád",
+                    "To": "Pécs, Zsolnay Negyed",
+                    "Distance": 5,
+                    "PaidAmount": 2000,
+                    "FareStartDate": "2024-02-14T17:15:00Z"
+                },
+                {
+                    "From": "Pécs, Kertváros",
+                    "To": "Villány",
+                    "Distance": 32,
+                    "PaidAmount": 12000,
+                    "FareStartDate": "2024-02-15T11:00:00Z"
+                },
+                {
+                    "From": "Pécs, Fő tér",
+                    "To": "Komló, Városközpont",
+                    "Distance": 22,
+                    "PaidAmount": 9000,
+                    "FareStartDate": "2024-02-20T14:30:00Z"
+                }
+            ]
+        }
+    ]
+}

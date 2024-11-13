@@ -15,8 +15,8 @@ namespace UJP6TH_HSZF_2024251.Application
             this.taxiService = taxiService;
             this.fareService = fareService;
 
-            // event subscription
-            Fare.HighPaidAmountDetected += OnHighPaidAmountDetected;
+            // Subscribe to the FareService event
+            fareService.HighPaidAmountDetected += OnHighPaidAmountDetected;
         }
 
         private static void OnHighPaidAmountDetected(Fare fare)
@@ -63,7 +63,7 @@ namespace UJP6TH_HSZF_2024251.Application
             }
             catch (Exception ex)
             {
-                AnsiConsole.MarkupLine($"[/]\n[red]{ex.Message}[/]");
+                AnsiConsole.MarkupLine($"\n[red]{ex.Message}[/]");
             }
 
             System.Console.ReadKey();
@@ -72,6 +72,8 @@ namespace UJP6TH_HSZF_2024251.Application
         public async Task ListAllCars() => await PrintCarsTree(taxiService.GetAllCars().Result);
 
         public string ReadPrompt(string prompt) => AnsiConsole.Prompt(new TextPrompt<string>(prompt));
+        public int ReadPromptInt(string prompt) => AnsiConsole.Prompt(new TextPrompt<int>(prompt));
+        
         public async Task PrintCarsTree(List<TaxiCar> cars)
         {
             if (cars.Count == 0)
@@ -280,7 +282,7 @@ namespace UJP6TH_HSZF_2024251.Application
                             .Title(title)
                             .AddChoices(filterOptions));
 
-                    int filterValue = int.Parse(ReadPrompt($"{title} {filterOptions[filterMethod.func.Invoke()].name}:"));
+                    int filterValue = ReadPromptInt($"{title} {filterOptions[filterMethod.func.Invoke()].name}:");
 
                      // Get the int operator for the filtering
                     var paidAmountComparison = comparisonFuncs[filterMethod.func.Invoke()];
@@ -296,7 +298,7 @@ namespace UJP6TH_HSZF_2024251.Application
                             .Title(title)
                             .AddChoices(filterOptions));
 
-                    int filterValue = int.Parse(ReadPrompt($"{title} {filterOptions[filterMethod.func.Invoke()].name}:"));
+                    int filterValue = ReadPromptInt($"{title} {filterOptions[filterMethod.func.Invoke()].name}:");
 
                     // Get the int operator for the filtering
                     var distanceComparison = comparisonFuncs[filterMethod.func.Invoke()]; 

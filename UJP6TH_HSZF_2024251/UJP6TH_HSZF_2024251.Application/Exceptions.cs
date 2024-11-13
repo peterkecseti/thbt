@@ -10,4 +10,9 @@ namespace UJP6TH_HSZF_2024251.Application
     {
         public LicensePlateException(string message = "[red]Ez a rendszám már használatban van![/]") : base(message) { }
     }
+
+    public class BadJsonException : Exception
+    {
+        public BadJsonException(string message = "[red]Nem megfelelő JSON formátum![/]") : base(message) { }
+    }
 }

@@ -31,22 +31,25 @@ namespace UJP6TH_HSZF_2024251.Application.Services
     {
         public ITaxiRepository taxiContext;
         public IFareRepository fareContext;
-        public TaxiService(ITaxiRepository taxiContext, IFareRepository fareContext)
+        public IFareService fareService;
+        public TaxiService(ITaxiRepository taxiContext, IFareRepository fareContext, IFareService fareService)
         {
             this.taxiContext = taxiContext;
             this.fareContext = fareContext;
+            this.fareService = fareService;
+            fareService.HighPaidAmountDetected += OnHighPaidAmountDetected;
         }
 
         // event
-        public delegate void FareWarningEventHandler(object sender);
-        public event FareWarningEventHandler FareWarning;
+        public event Action<Fare> HighPaidAmountDetected;
+        private void OnHighPaidAmountDetected(Fare highPaidFare) => HighPaidAmountDetected?.Invoke(highPaidFare);
 
 
-        
         public async Task AddData(string path)
         {
             var json = File.ReadAllText(path);
             var taxiData = JsonConvert.DeserializeObject<RootTaxiDto>(json);
+            if (taxiData == null || taxiData.TaxiCars == null) throw new BadJsonException(); // ♪
 
             foreach (var taxiCarData in taxiData.TaxiCars)
             {
@@ -124,13 +127,15 @@ namespace UJP6TH_HSZF_2024251.Application.Services
             DateTime now = DateTime.Now;
             Fare fare = new Fare(from, to, distance, paidAmount, now, selectedCar);
 
-            var allFares = fareContext.GetAllFares().Result;
-            Fare.CheckForHighPaidAmount(fare, allFares);
+            var allFares = await fareService.GetAllFares();
+
+            // check if event should be triggered
+            fareService.CheckForHighPaidAmount(fare, allFares);
 
             await taxiContext.Add(fare);
         }
 
-        public List<TaxiCar> FilterByLicensePlate(List<TaxiCar> cars, string filterValue)
+            public List<TaxiCar> FilterByLicensePlate(List<TaxiCar> cars, string filterValue)
         {
             var filteredCars = cars.Where(l => l.LicensePlate.ToLower().Contains(filterValue.ToLower())).ToList();
             return filteredCars;
@@ -189,7 +194,7 @@ namespace UJP6TH_HSZF_2024251.Application.Services
                             .Where(car => car.Fares.Any()).ToList();
             return filteredCars;
         }
-        public async Task<List<TaxiCar>> Filter(List<Func<List<TaxiCar>, List<TaxiCar>>> filterActions, List<TaxiCar> toFilter = null)
+        public async Task<List<TaxiCar>> Filter(List<Func<List<TaxiCar>, List<TaxiCar>>> filterActions, List<TaxiCar> toFilter = null) // ♪
         {
             var cars = new List<TaxiCar>();
             if (toFilter == null)
